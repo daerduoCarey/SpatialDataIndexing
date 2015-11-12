@@ -1,0 +1,92 @@
+************************************************************************
+This is an implementation for task two of Spatial-Temporal Data Analysis 
+class lectured by Professor Yu Zheng in the summer of 2014.
+************************************************************************
+
+
+* How to use this project?
+
+	1. This project contains two main files, named "POI.h" and "POI.cpp". While, "main.cpp" is just a sample of using it.
+	2. There is only a big class, named "Search". All the functions are methods of this class.
+	3. You must generate one instance of class Search to begin to use all functions.
+	4. The input file is required to be the similar format just as file "input".
+
+
+* Basic Data Structure
+
+struct point			---store a point
+struct rectangle		---store a rectangle range
+struct circle			---store a circle range
+
+NOTE: More details can access from POI.h
+
+
+
+* All public methods using KD-Tree implementation
+
+Constructor:
+	void IndexBuilding(string file_name);
+		---pass input file path to file_name
+
+Public Methods:
+	list<POI*> KNNQuery(struct point p, int cat, int k);
+		---find the nearest k neighbours with category cat of point p.
+
+	list<POI*> RangeQuery(struct circle range, int cat);
+		---find all category cat POIs in circle range
+
+	list<POI*> RangeQuery(struct rectangle range, int cat);
+		---find all category cat POIs in rectangle range
+	
+NOTE: Refer to "How to see the results?" section to see more informations.
+
+
+* All public methods using Grid-Based implementation
+
+Constructor:
+	void IndexBuilding2(string file_name, int x, int y);
+		---pass input file path to file_name and split latitude into x segments, split longtitude into y segments
+	void IndexBuilding2(string file_name);
+		---pass input file path to file_name (default: x = 100, y = 100)
+
+Public Methods:
+	list<POI*> KNNQuery2(struct point p, int cat, int k);
+		---find the nearest k neighbours with category cat of point p.
+
+	list<POI*> RangeQuery2(struct circle range, int cat);
+		---find all category cat POIs in circle range
+
+	list<POI*> RangeQuery2(struct rectangle range, int cat);
+		---find all category cat POIs in rectangle range
+		
+NOTE: Refer to "How to see the results?" section to see more informations.
+
+
+* All public methods using Brute-Scan implementation
+
+Public Methods:
+	list<POI*> Scan(struct rectangle range, int cat, string file);
+	list<POI*> Scan(struct circle range, int cat, string file);
+	list<POI*> KNNScan(struct point p, int cat, int k, string file);
+
+NOTE: Refer to "How to see the results?" section to see more informations.
+
+
+
+* How to see the results?
+
+You can use the following function to see the result:
+
+	void print_list(list<POI*>& res)
+	{
+		int k = 0;
+		for(list<POI*>::iterator ite = res.begin(); ite != res.end(); ++ite)
+			cout<<++k<<": "<<(*ite)->id<<endl;
+		cout<<"Total: "<<res.size()<<endl;
+	}
+
+
+* A good sample of using this project can be accessed from "main.cpp"!!!
+* You should write your own "main.cpp", then type "make" in this folder twice and you will see the result!!!
+
+
